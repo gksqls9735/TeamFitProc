@@ -11,24 +11,24 @@ import java.util.Date;
 public class MatchsDAO {
 	// 강사 매칭
 	public void setMatchs(String inst_id, String mem_id) {
-		
+
 		Connection con = null;
 		CallableStatement cstmt = null;
-		
+
 		try {
 			con = DBUtil.makeConnection();
 			cstmt = con.prepareCall("{CALL MATCHS_INSERT(?, ?)}");
 			cstmt.setString(1, inst_id);
 			cstmt.setString(2, mem_id);
-			
+
 			int i = cstmt.executeUpdate();
 			if (i != 0) {
 				System.out.println("매칭이 취소되었습니다.");
 				System.out.println("매칭 취소 성공!!!");
-			}else {
+			} else {
 				System.out.println("매칭 취소 실패!!!");
 			}
-		
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -49,10 +49,10 @@ public class MatchsDAO {
 
 	// 매칭 취소
 	public void deleteMatchs(String mem_id) {
-		
+
 		Connection con = null;
 		CallableStatement cstmt = null;
-		
+
 		try {
 			con = DBUtil.makeConnection();
 			cstmt = con.prepareCall("{CALL MATCHS_DELETE(?, ?, ?)}");
@@ -63,10 +63,10 @@ public class MatchsDAO {
 			if (cstmt.getInt(3) == 0) {
 				System.out.println("매칭이 취소되었습니다.");
 				System.out.println("매칭 취소 성공!!!");
-			}else {
+			} else {
 				System.out.println("매칭 취소 실패!!!");
 			}
-		
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -102,16 +102,23 @@ public class MatchsDAO {
 
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
+				System.out.println("\t\t\t\t\t\t\t    강사 매칭 정보");
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------------");
+				String header = String.format("%-7s %-8s %-10s %-15s %-13s", "일련번호", "내아이디", "강사이름", "전화번호", "등록일자");
+				System.out.println("\t\t\t\t    " + header);
 				int m_no = rs.getInt("M_NO");
 				String myid = rs.getString("MEM_ID");
 				String inst_name = rs.getString("INST_NAME");
 				String inst_phone = rs.getString("INST_PHONE");
 				Date m_date = rs.getDate("M_DATE");
 				check = true;
-				System.out.println("---------------------------------");
-				System.out.println("일련번호\t|" + m_no + "\n내아이디\t|" + myid + "\n강사이름\t|" + inst_name + "\n전화번호\t|"
-						+ inst_phone + "\n등록일자\t|" + m_date);	
-				System.out.println("---------------------------------");
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------------");
+				System.out.println("\t\t\t\t    "
+						+ String.format("%-8d %-10s %-10s %-16s %-10s", m_no, myid, inst_name, inst_phone, m_date));
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------------");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,17 +157,17 @@ public class MatchsDAO {
 			pstmt.setString(1, mem_id);
 
 			rs = pstmt.executeQuery();
-			
+
 			if (rs.next()) {
-				
+
 				int count = rs.getInt("COUNT(*)");
-				
+
 				if (count == 0) {
 					check = true;
 				} else {
 					check = false;
 				}
-				
+
 			}
 
 		} catch (SQLException e) {

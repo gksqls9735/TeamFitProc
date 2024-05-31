@@ -13,7 +13,7 @@ import model.UserVO;
 public class UserDAO {
 
 	public static Scanner sc = new Scanner(System.in);
-	
+
 	// 유저 전체 정보
 	public void getUserTotalList() {
 		String sql = "SELECT * FROM USERT ORDER BY U_NO ASC";
@@ -75,7 +75,7 @@ public class UserDAO {
 			cstmt.setString(5, u.getIs_instructor());
 			cstmt.registerOutParameter(6, Types.NUMERIC);
 			int i = cstmt.executeUpdate();
-			
+
 			if (cstmt.getInt(6) != 0) {
 				System.out.println(u.getU_name() + "유저 등록 완료.");
 				System.out.println("유저 등록 성공!");
@@ -144,7 +144,7 @@ public class UserDAO {
 	// 아이디 확인
 	public boolean getUserIdCheck(String id) {
 
-		String sql = "SELECT * FROM USERT WHERE U_ID = ?"; 
+		String sql = "SELECT * FROM USERT WHERE U_ID = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -275,17 +275,24 @@ public class UserDAO {
 			pstmt.setString(1, u_id);
 
 			rs = pstmt.executeQuery();
-			System.out.println("유저 정보 출력");
+			System.out.println("\t\t\t\t\t\t\t    유저 정보 출력");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 			if (rs.next()) {
+				String header = String.format("%-10s %-10s %-13s %-10s %-17s %-10s", "일련번호", "아이디", "비밀번호", "이름",
+						"전화번호", "강사여부");
+				System.out.println("\t\t\t    " + header);
 				u.setU_no(rs.getInt("U_NO"));
 				u.setU_id(rs.getString("U_ID"));
 				u.setU_pw(rs.getString("U_PW"));
 				u.setU_name(rs.getString("U_NAME"));
 				u.setU_phone(rs.getString("U_PHONE"));
 				u.setIs_instructor(rs.getString("IS_INSTRUCTOR"));
-				System.out.println("---------------------------------");
-				System.out.println(u.toString());
-				System.out.println("---------------------------------");
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------------");
+				System.out.println("\t\t\t    " + u.toString());
+				System.out.println(
+						"----------------------------------------------------------------------------------------------------------------------------------");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -361,7 +368,7 @@ public class UserDAO {
 
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				checkInst = rs.getString("IS_INSTRUCTOR");				
+				checkInst = rs.getString("IS_INSTRUCTOR");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -399,14 +406,21 @@ public class UserDAO {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 
+			String header = String.format("%-13s %-18s %-10s", "일련번호", "강사ID", "강사이름");
+			System.out.println("\t\t\t\t\t\t\t     강사 리스트");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("\t\t\t\t\t      " + header);
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 			while (rs.next()) {
 				u_no = rs.getInt("U_NO");
 				u_id = rs.getString("U_ID");
 				u_name = rs.getString("U_NAME");
-				System.out.println("---------------------------------");
-				System.out.println("일련번호\t|" + u_no + "\n강사ID\t|" + u_id + "\n강사이름\t|" + u_name);
-				System.out.println("---------------------------------");
+				System.out.println("\t\t\t\t\t      " + String.format("%-14d %-19s %-10s", u_no, u_id, u_name));
 			}
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -427,25 +441,25 @@ public class UserDAO {
 			}
 		}
 	}
-	
-	//일련번호로 강사의 아이디가져오기
+
+	// 일련번호로 강사의 아이디가져오기
 	public String getInstId(int no) {
 		String sql = "SELECT U_ID FROM USERT WHERE U_NO = ?";
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String inst_id = null;
-		
+
 		try {
 			con = DBUtil.makeConnection();
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, no);
-			
+
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				inst_id = rs.getString("U_ID");				
+				inst_id = rs.getString("U_ID");
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -465,32 +479,8 @@ public class UserDAO {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return inst_id;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

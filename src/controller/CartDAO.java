@@ -59,7 +59,7 @@ public class CartDAO {
 
 	// 수강 신청
 	public void setCartRegister(CartVO c) {
-		
+
 		Connection con = null;
 		CallableStatement cstmt = null;
 
@@ -110,7 +110,7 @@ public class CartDAO {
 			cstmt.setInt(1, c_no);
 			cstmt.registerOutParameter(2, Types.NUMERIC);
 			cstmt.registerOutParameter(3, Types.NUMERIC);
-			
+
 			cstmt.executeUpdate();
 			if (cstmt.getInt(3) == 0) {
 				System.out.println("강의 신청 취소 완료.");
@@ -233,16 +233,22 @@ public class CartDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, u_id);
 			rs = pstmt.executeQuery();
-
+			System.out.println("\t\t\t\t\t\t\t    수강 신청 목록");
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
+			String header = String.format("%-9s %-10s %-9s %-9s %-9s %-9s %-9s %-20s %-9s %-9s", "일련번호", "학생ID", "유저이름",
+					"강의번호", "운동종목", "강의날짜", "강의시간", "강의장소", "가격", "결제여부");
+			System.out.println("\t" + header);
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 			while (rs.next()) {
-				System.out.println("---------------------------------");
-				System.out.println("일련번호\t|" + rs.getInt("C_NO") + "\n학생ID\t|" + u_id + "\n유저이름\t|"
-						+ rs.getString("U_NAME") + "\n강의번호\t|" + rs.getInt("E_NO") + "\n운동종목\t|"
-						+ rs.getString("E_NAME") + "\n강의날짜\t|" + rs.getString("E_DATE") + "\n강의시간\t|"
-						+ rs.getString("E_TIME") + "\n강의장소\t|" + rs.getString("E_ADDR") + "\n가격\t|"
-						+ rs.getInt("E_PRICE") + "\n결제여부\t|" + rs.getString("C_PAYMENT_STATUS"));
-				System.out.println("---------------------------------");
+				System.out.println("\t" + String.format("%-10d %-11s %-10s %-10d %-9s %-11s %-10s %-18s %-10d %-10s",
+						rs.getInt("C_NO"), u_id, rs.getString("U_NAME"), rs.getInt("E_NO"), rs.getString("E_NAME"),
+						rs.getString("E_DATE"), rs.getString("E_TIME"), rs.getString("E_ADDR"), rs.getInt("E_PRICE"),
+						rs.getString("C_PAYMENT_STATUS")));
 			}
+			System.out.println(
+					"----------------------------------------------------------------------------------------------------------------------------------");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -267,47 +273,47 @@ public class CartDAO {
 	// 강의 코드 일련번호 1개 가져오기 !
 	public Map<Integer, Integer> getCartE_NO(int c_no) {
 		Map<Integer, Integer> e_noCountMap = new HashMap<>();
-	    String sql = "SELECT C.E_NO, E.E_MEMCOUNT FROM CART C INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.C_NO = ?";
-	    Connection con = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
+		String sql = "SELECT C.E_NO, E.E_MEMCOUNT FROM CART C INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.C_NO = ?";
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-	    try {
-	        con = DBUtil.makeConnection();
-	        pstmt = con.prepareStatement(sql);
-	        pstmt.setInt(1, c_no);
-	        rs = pstmt.executeQuery();
+		try {
+			con = DBUtil.makeConnection();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, c_no);
+			rs = pstmt.executeQuery();
 
-	        if (rs.next()) {
-	            e_noCountMap.put(rs.getInt("E_NO"), rs.getInt("E_MEMCOUNT"));
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	            if (rs != null) {
-	                rs.close();
-	            }
-	            if (pstmt != null) {
-	                pstmt.close();
-	            }
-	            if (con != null) {
-	                con.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    return e_noCountMap;
+			if (rs.next()) {
+				e_noCountMap.put(rs.getInt("E_NO"), rs.getInt("E_MEMCOUNT"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (con != null) {
+					con.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return e_noCountMap;
 	}
 
 	// 강의 코드 일련번호 리스트 가져오기 !
 	public Map<Integer, Integer> getCartE_NOList(String id) {
 		Map<Integer, Integer> e_noCountMapList = new HashMap<>();
 		String sql = "SELECT C.E_NO, E.E_MEMCOUNT FROM CART C INNER JOIN EXERCISE E ON C.E_NO = E.E_NO WHERE C.U_ID = ?";
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

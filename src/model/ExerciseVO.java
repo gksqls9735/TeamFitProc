@@ -95,7 +95,7 @@ public class ExerciseVO {
 
 	@Override
 	public String toString() {
-		return "일련번호\t|" + e_no + "\n운동종목\t|" + e_name + "\n가격\t|" + e_price + "원" + "\n날짜\t|" + e_date + "\n시작시간\t|"
-				+ e_time + "\n장소\t|" + e_addr + "\n정원\t|" + e_memCount + "/" + e_maxmem + "명";
+		return String.format("%-10d %-10s %-10s %-14s %-11s %-16s %-10s",
+                e_no, e_name, String.valueOf(e_price) + "원", e_date, e_time, e_addr, e_memCount + "/" + e_maxmem + "명");
 	}
 }

@@ -64,7 +64,7 @@ public class CartVO {
 
 	@Override
 	public String toString() {
-		return "일련번호\t|" + c_no + "\n유저ID\t|" + u_id + "\n강의번호\t|" + e_no + "\n신청날짜\t|" + c_enrollment_date
-				+ "\n결제여부\t|" + c_payment_status;
+		return String.format("%-10d %-15s %-10d %-15s %-10s",
+                c_no, u_id, e_no, c_enrollment_date, c_payment_status);
 	}
 }

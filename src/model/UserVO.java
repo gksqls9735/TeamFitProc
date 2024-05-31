@@ -72,8 +72,8 @@ public class UserVO {
 
 	@Override
 	public String toString() {
-		return "일련번호\t|" + u_no + "\n아이디\t|" + u_id + "\n비밀번호\t|" + u_pw + "\n이름\t|" + u_name + "\n전화번호\t|" + u_phone
-				+ "\n강사여부\t|" + is_instructor;
+		return String.format("%-11d %-11s %-15s %-9s %-19s %-10s",
+                u_no, u_id, u_pw, u_name, u_phone, is_instructor);
 
 	}
 }

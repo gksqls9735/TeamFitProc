@@ -5,12 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBUtil {
 	public static Connection makeConnection() {
-		String filePath = "D:/doitjava/teamfitproc/src/db.properties";
+		String filePath = "C:/Users/user1/git/TeamFitProc/src/db.properties";
 		Connection con = null;
 		try {
 			//db.properties로 db주소, 사용자명, 사용자 암호 로드하기
@@ -39,5 +41,9 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 		return con;
+	}
+	
+	public static void closeResource(ResultSet rs, PreparedStatement pstmt, Connection con) {
+		// 매개변수로 자원 받아서 닫아버리기
 	}
 }
