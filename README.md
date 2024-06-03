@@ -71,13 +71,13 @@ TeamFitdb_project_structure/
 1. **리포지토리 클론:**
 
     ```sh
-    git clone https://github.com/gksqls9735/teamfitdb.git
+    git clone https://github.com/gksqls9735/teamfitproc.git
     ```
 
 2. **프로젝트 디렉토리로 이동:**
 
     ```sh
-    cd teamfitdb
+    cd teamfitproc
     ```
 
 3. **IDE에 프로젝트 가져오기:**
