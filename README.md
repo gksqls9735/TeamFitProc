@@ -123,4 +123,4 @@ TeamFitdb_project_structure/
 ## 연락처
 이메일 - [gksqls9735@gmail.com](mailto:gksqls9735@gmail.com)
 
-프로젝트 링크: [https://github.com/gksqls9735/teamfitdb](https://github.com/gksqls9735/teamfitdb)
+프로젝트 링크: [https://github.com/gksqls9735/teamfitProc](https://github.com/gksqls9735/teamfitProc)
